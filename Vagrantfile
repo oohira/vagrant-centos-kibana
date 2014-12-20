@@ -20,7 +20,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     end
     receiver.vm.network :private_network, ip: "192.168.33.20", virtualbox__intnet: "intnet"
     receiver.vm.network :forwarded_port, guest: 80, host: 10080
-    receiver.vm.network :forwarded_port, guest: 9200, host: 9200
     receiver.vm.provision :shell, path: "receiver/provision.sh"
   end
 end
