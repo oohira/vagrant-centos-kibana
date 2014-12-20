@@ -4,6 +4,8 @@ conf_dir=/vagrant/receiver
 
 # httpd
 yum install -y httpd
+mv /etc/httpd/conf/httpd.conf /etc/httpd/conf/httpd.conf.orig
+cp ${conf_dir}/httpd/httpd.conf /etc/httpd/conf/
 service httpd start
 chkconfig httpd on
 
@@ -19,6 +21,8 @@ chkconfig elasticsearch on
 # kibana
 wget -q https://download.elasticsearch.org/kibana/kibana/kibana-3.1.2.tar.gz
 tar xvzf kibana-3.1.2.tar.gz
+mv kibana-3.1.2/config.js kibana-3.1.2/config.js.orig
+cp ${conf_dir}/kibana/config.js kibana-3.1.2/
 mv kibana-3.1.2 /opt/
 ln -snf /opt/kibana-3.1.2 /var/www/html/kibana
 
