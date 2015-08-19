@@ -1,0 +1,40 @@
+#!/bin/bash
+#
+# Kibana - Init script for Kibana
+#
+# chkconfig: 345 99 76
+# processname: kibana
+#
+export NAME=kibana
+export LOG_DIR=/var/log/${NAME}
+export PID=/var/run/${NAME}.pid
+export LOG=${LOG_DIR}/${NAME}.log
+
+test -d $LOG_DIR || mkdir $LOG_DIR
+
+case $1 in
+  'start' )
+    $0 status >/dev/null 2>&1 && echo "${NAME} is already running." && exit 1
+    nohup /opt/${NAME}/bin/${NAME} 0<&- &> $LOG &
+    echo $! > $PID
+    ;;
+  'stop' )
+    $0 status >/dev/null 2>&1 || echo "${NAME} is not running." || exit 1
+    test -f $PID && cat $PID | xargs kill -s SIGKILL && rm $PID
+    ;;
+  'restart' )
+    $0 stop
+    sleep 1
+    $0 start
+    ;;
+  'status' )
+    test -f $PID || echo "${NAME} not running." || exit 1
+    PID=`cat $PID`
+    kill -s 0 $PID >/dev/null 2>&1 && echo "${NAME} is running." && exit 0
+    echo "${NAME} not running."
+    exit 1
+    ;;
+  *)
+    echo "Usage: $0 start|stop|restart|status"
+    ;;
+esac

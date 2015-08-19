@@ -383,6 +383,3 @@
 # it unless you need it is recommended (it is disabled by default).
 #
 #http.jsonp.enable: true
-
-http.cors.enabled: true
-http.cors.allow-origin: /https?:\/\/localhost(:[0-9]+)?/

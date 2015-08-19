@@ -11,23 +11,27 @@ chkconfig httpd on
 
 # elasticsearch
 yum install -y java-1.8.0-openjdk-headless
-wget -q https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-1.4.1.noarch.rpm
-rpm -ivh elasticsearch-1.4.1.noarch.rpm
+wget -q https://download.elastic.co/elasticsearch/elasticsearch/elasticsearch-1.7.1.noarch.rpm
+rpm -ivh elasticsearch-1.7.1.noarch.rpm
 mv /etc/elasticsearch/elasticsearch.yml /etc/elasticsearch/elasticsearch.yml.orig
 cp ${conf_dir}/elasticsearch/elasticsearch.yml /etc/elasticsearch/
 service elasticsearch start
 chkconfig elasticsearch on
 
 # kibana
-wget -q https://download.elasticsearch.org/kibana/kibana/kibana-3.1.2.tar.gz
-tar xvzf kibana-3.1.2.tar.gz
-mv kibana-3.1.2/config.js kibana-3.1.2/config.js.orig
-cp ${conf_dir}/kibana/config.js kibana-3.1.2/
-mv kibana-3.1.2 /opt/
-ln -snf /opt/kibana-3.1.2 /var/www/html/kibana
+wget -q https://download.elastic.co/kibana/kibana/kibana-4.1.1-linux-x64.tar.gz
+tar xvzf kibana-4.1.1-linux-x64.tar.gz
+mv kibana-4.1.1-linux-x64 /opt/kibana
+mv /opt/kibana/config/kibana.yml /opt/kibana/config/kibana.yml.orig
+cp ${conf_dir}/kibana/kibana.yml /opt/kibana/config/
+cp ${conf_dir}/kibana/kibana /etc/init.d/
+chmod 755 /etc/init.d/kibana
+service kibana start
+chkconfig kibana on
 
 # fluentd
-curl -L http://toolbelt.treasuredata.com/sh/install-redhat-td-agent2.sh | sh
+wget -q http://packages.treasuredata.com.s3.amazonaws.com/2/redhat/6/x86_64/td-agent-2.2.1-0.el6.x86_64.rpm
+rpm -ivh td-agent-2.2.1-0.el6.x86_64.rpm
 yum install -y gcc-c++ libcurl-devel
 /opt/td-agent/embedded/bin/fluent-gem install --no-ri --no-rdoc fluent-plugin-elasticsearch
 mv /etc/td-agent/td-agent.conf /etc/td-agent/td-agent.conf.orig
