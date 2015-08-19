@@ -6,7 +6,7 @@ CentOS with Fluentd + Elasticsearch + Kibana on Vagrant.
 ## Usage
 
 1. Run `vagrant up` to start two guest VMs.
-1. Open [http://localhost:10080/kibana/](http://localhost:10080/kibana/) to show Kibana dashboard.
+1. Open [http://localhost:10080/](http://localhost:10080/) to show Kibana dashboard.
 1. Login to sender VM and generate dummy access logs of Apache.
 
 ```
@@ -16,7 +16,7 @@ $ vagrant ssh sender
 
 ## Verification environment
 
-* Mac OS 10.9.5
+* Mac OS 10.10.5
 * VirtualBox 4.3.12
 * Vagrant 1.6.3
 
@@ -43,10 +43,10 @@ Fluentd collects logs from sender VM and adds them to Elasticsearch indices. The
 
 * CentOS (192.168.33.20)
 * Apache
-* Fluentd (td-agent)
+* Fluentd (td-agent 2.2.1)
   - fluent-plugin-elasticsearch
-* Elasticsearch
-* Kibana
+* Elasticsearch 1.7.1
+* Kibana 4.1.1
 
 You can login to receiver VM as following:
 
