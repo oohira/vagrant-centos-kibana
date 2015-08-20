@@ -46,10 +46,23 @@ Fluentd collects logs from sender VM and adds them to Elasticsearch indices. The
 * Fluentd (td-agent 2.2.1)
   - fluent-plugin-elasticsearch
 * Elasticsearch 1.7.1
+  - elasticsearch-curator
 * Kibana 4.1.1
 
 You can login to receiver VM as following:
 
 ```
 $ vagrant ssh receiver
+```
+
+Elasticsearch indices are automatically deleted every 15 days.
+
+```
+[root@receiver ~]# crontab -l
+0 2 * * * /etc/elasticsearch/delete-elasticsearch-index.sh
+[root@receiver ~]# cat /etc/elasticsearch/delete-elasticsearch-index.sh
+...
+exec_curator bloom 2
+exec_curator close 10
+exec_curator delete 15
 ```
