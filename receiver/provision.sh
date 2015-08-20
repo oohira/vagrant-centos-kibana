@@ -18,6 +18,14 @@ cp ${conf_dir}/elasticsearch/elasticsearch.yml /etc/elasticsearch/
 service elasticsearch start
 chkconfig elasticsearch on
 
+# curator
+curl -OL https://raw.github.com/pypa/pip/master/contrib/get-pip.py
+python get-pip.py
+pip install elasticsearch-curator==3.2.3
+cp ${conf_dir}/elasticsearch/delete-elasticsearch-index.sh /etc/elasticsearch/
+chmod 755 /etc/elasticsearch/delete-elasticsearch-index.sh
+echo "0 2 * * * /etc/elasticsearch/delete-elasticsearch-index.sh" | crontab -
+
 # kibana
 wget -q https://download.elastic.co/kibana/kibana/kibana-4.1.1-linux-x64.tar.gz
 tar xvzf kibana-4.1.1-linux-x64.tar.gz
