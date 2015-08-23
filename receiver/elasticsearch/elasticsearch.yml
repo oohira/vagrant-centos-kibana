@@ -29,7 +29,7 @@
 # Cluster name identifies your cluster for auto-discovery. If you're running
 # multiple clusters on the same network, make sure you're using unique names.
 #
-#cluster.name: elasticsearch
+cluster.name: kibana.elasticsearch
 
 
 #################################### Node #####################################
@@ -318,7 +318,7 @@
 #
 # 1. Disable multicast discovery (enabled by default):
 #
-#discovery.zen.ping.multicast.enabled: false
+discovery.zen.ping.multicast.enabled: false
 #
 # 2. Configure an initial list of master nodes in the cluster
 #    to perform discovery when new nodes (master or data) are started:
